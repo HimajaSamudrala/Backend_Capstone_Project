@@ -1,7 +1,9 @@
 package com.scaler.product_service.controllers;
 
 import com.scaler.product_service.exceptions.ProductDoesNotExistException;
+import com.scaler.product_service.models.Category;
 import com.scaler.product_service.models.Product;
+import com.scaler.product_service.repositories.CategoryRepository;
 import com.scaler.product_service.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,11 +20,14 @@ import java.util.List;
 public class ProductController {
 
     private ProductService productService;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public ProductController(@Qualifier("selfProductService") ProductService productService)
+    public ProductController(@Qualifier("selfProductService") ProductService productService,
+                             CategoryRepository categoryRepository)
     {
         this.productService = productService;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping()
@@ -43,8 +48,6 @@ public class ProductController {
     @PostMapping()
     public Product addNewProduct(@RequestBody Product product)
     {
-        //Product p = new Product();
-        //p.setTitle("A new product");
         return productService.addNewProduct(product);
     }
 

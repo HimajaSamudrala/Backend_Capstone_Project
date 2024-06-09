@@ -1,6 +1,7 @@
 package com.scaler.product_service.services;
 
 import com.scaler.product_service.dtos.FakeStoreProductDTO;
+import com.scaler.product_service.exceptions.CategoryNotExistException;
 import com.scaler.product_service.exceptions.ProductDoesNotExistException;
 import com.scaler.product_service.models.Category;
 import com.scaler.product_service.models.Product;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class FakeStoreProductService implements ProductService{
+public class FakeStoreProductService implements ProductService, CategoryService{
 
     private RestTemplate restTemplate;
 
@@ -141,5 +142,15 @@ public class FakeStoreProductService implements ProductService{
 
         restTemplate.execute("https://fakestoreapi.com/products/"+id, HttpMethod.DELETE, (RequestCallback)null, (ResponseExtractor)null);
         //restTemplate.delete("https://fakestoreapi.com/products/"+id);
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        return null;
+    }
+
+    @Override
+    public List<Product> getInCategory(String category) throws CategoryNotExistException {
+        return null;
     }
 }

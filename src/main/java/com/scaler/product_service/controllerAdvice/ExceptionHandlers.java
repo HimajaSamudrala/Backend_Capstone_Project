@@ -1,6 +1,7 @@
 package com.scaler.product_service.controllerAdvice;
 
 import com.scaler.product_service.dtos.ExceptionDto;
+import com.scaler.product_service.exceptions.CategoryNotExistException;
 import com.scaler.product_service.exceptions.ProductDoesNotExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,15 @@ public class ExceptionHandlers {
 
     @ExceptionHandler(ProductDoesNotExistException.class)
     public ResponseEntity<ExceptionDto> handleProductDoesNotExistException(ProductDoesNotExistException exception)
+    {
+        ExceptionDto dto = new ExceptionDto();
+        dto.setMessage(exception.getMessage());
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @ExceptionHandler(ProductDoesNotExistException.class)
+    public ResponseEntity<ExceptionDto> handleCategoryNotExistException(CategoryNotExistException exception)
     {
         ExceptionDto dto = new ExceptionDto();
         dto.setMessage(exception.getMessage());
