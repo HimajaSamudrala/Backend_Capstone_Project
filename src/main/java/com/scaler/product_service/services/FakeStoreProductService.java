@@ -10,12 +10,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpMessageConverterExtractor;
 import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class FakeStoreProductService implements ProductService, CategoryService{
@@ -138,10 +137,11 @@ public class FakeStoreProductService implements ProductService, CategoryService{
     }
 
     @Override
-    public void deleteProduct(Long id) {
+    public Product deleteProduct(Long id) {
 
-        restTemplate.execute("https://fakestoreapi.com/products/"+id, HttpMethod.DELETE, (RequestCallback)null, (ResponseExtractor)null);
+        //return restTemplate.execute("https://fakestoreapi.com/products/"+id, HttpMethod.DELETE, (RequestCallback)null, (ResponseExtractor)null);
         //restTemplate.delete("https://fakestoreapi.com/products/"+id);
+        return null;
     }
 
     @Override

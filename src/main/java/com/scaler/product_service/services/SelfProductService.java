@@ -38,7 +38,7 @@ public class SelfProductService implements ProductService{
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        return productRepository.findAll();
     }
 
     @Override
@@ -56,16 +56,71 @@ public class SelfProductService implements ProductService{
 
     @Override
     public Product updateProduct(Long id, Product product) {
-        return null;
+        Optional<Product> productOptional = productRepository.findById(id);
+        Optional<Category> categoryOptional = categoryRepository.findByName(product.getCategory().getName());
+        if(productOptional.isEmpty()) throw new RuntimeException();
+        Product savedProduct = productOptional.get();
+
+        if(product.getTitle() != null)
+        {
+            savedProduct.setTitle(product.getTitle());
+        }
+        if(product.getPrice() != null)
+        {
+            savedProduct.setPrice(product.getPrice());
+        }
+        if(product.getDescription() != null)
+        {
+            savedProduct.setDescription(product.getDescription());
+        }
+        if(product.getImageURL() != null)
+        {
+            savedProduct.setImageURL(product.getImageURL());
+        }
+        if(categoryOptional.isEmpty())
+        {
+            Product oldProduct = productRepository.findByTitle(product.getTitle());
+            savedProduct.setCategory(categoryRepository.save(product.getCategory()));
+        }
+        else
+        {
+            Product oldProduct = productRepository.findByTitle(product.getTitle());
+            savedProduct.setCategory(categoryOptional.get());
+        }
+
+        return productRepository.save(savedProduct);
     }
 
     @Override
-    public Product replaceProduct(Long id, Product product) {
-        return null;
+    public Product replaceProduct(Long id, Product product) throws ProductDoesNotExistException{
+        Optional<Product> productOptional = productRepository.findById(id);
+        Optional<Category> categoryOptional = categoryRepository.findByName(product.getCategory().getName());
+        if(productOptional.isEmpty())
+        {
+            throw new ProductDoesNotExistException("Product with id"+id+"doesn't exist");
+        }
+        Product savedProduct = productOptional.get();
+
+        savedProduct.setTitle(product.getTitle());
+        savedProduct.setPrice(product.getPrice());
+        savedProduct.setDescription(product.getDescription());
+        if(categoryOptional.isEmpty())
+        {
+            savedProduct.setCategory(categoryRepository.save(product.getCategory()));
+        }
+        else
+        {
+            savedProduct.setCategory(categoryOptional.get());
+        }
+        savedProduct.setImageURL(product.getImageURL());
+
+        return productRepository.save(savedProduct);
     }
 
     @Override
-    public void deleteProduct(Long id) {
-
+    public Product deleteProduct(Long id) {
+        Optional<Product> optionalProduct = productRepository.findProductById(id);
+        productRepository.deleteById(id);
+        return optionalProduct.get();
     }
 }

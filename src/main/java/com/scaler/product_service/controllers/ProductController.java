@@ -58,14 +58,13 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public Product replaceProduct(@PathVariable("id") Long id, @RequestBody Product product)
-    {
+    public Product replaceProduct(@PathVariable("id") Long id, @RequestBody Product product) throws ProductDoesNotExistException {
         return productService.replaceProduct(id, product);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id)
+    public Product deleteProduct(@PathVariable("id") Long id)
     {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return productService.deleteProduct(id);
     }
 }

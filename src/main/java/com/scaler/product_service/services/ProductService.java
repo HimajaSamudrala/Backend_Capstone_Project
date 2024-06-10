@@ -18,7 +18,7 @@ public interface ProductService {
 
     Product updateProduct(Long id, Product product);
 
-    Product replaceProduct(Long id, Product product);
+    Product replaceProduct(Long id, Product product) throws ProductDoesNotExistException;
 
-    void deleteProduct(Long id);
+    Product deleteProduct(Long id);
 }
