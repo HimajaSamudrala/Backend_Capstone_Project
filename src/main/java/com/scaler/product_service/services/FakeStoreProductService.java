@@ -5,6 +5,7 @@ import com.scaler.product_service.exceptions.CategoryNotExistException;
 import com.scaler.product_service.exceptions.ProductDoesNotExistException;
 import com.scaler.product_service.models.Category;
 import com.scaler.product_service.models.Product;
+import com.scaler.product_service.repositories.projections.CategoryWithName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -145,7 +146,7 @@ public class FakeStoreProductService implements ProductService, CategoryService{
     }
 
     @Override
-    public List<Category> getAllCategories() {
+    public List<CategoryWithName> getAllCategories() {
         return null;
     }
 

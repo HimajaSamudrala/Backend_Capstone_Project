@@ -5,6 +5,7 @@ import com.scaler.product_service.models.Category;
 import com.scaler.product_service.models.Product;
 import com.scaler.product_service.repositories.CategoryRepository;
 import com.scaler.product_service.repositories.ProductRepository;
+import com.scaler.product_service.repositories.projections.CategoryWithName;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class SelfCategoryService implements CategoryService{
     }
 
     @Override
-    public List<Category> getAllCategories() {
+    public List<CategoryWithName> getAllCategories() {
         return categoryRepository.findAllCategories();
     }
 
